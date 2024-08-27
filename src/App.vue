@@ -97,13 +97,12 @@ export default {
               <div class="view">
                 <div class="cotainer__tittle__descrip">
                   <input class="toggle" type="checkbox" v-model="todo.cheked" />
-                  <h2 class="label-title" :class="{ cheked: todo.cheked }">
-                    {{ todo.title }}
-                  </h2>
+                  <input type="text" class="label-title" :class="{ cheked: todo.cheked }" v-model="todo.title">
+                    
+                </input>
                 </div>
-                <p class="label-description" :class="{ cheked: todo.cheked }">
-                  {{ todo.description }}
-                </p>
+                <input type="text" class="label-description" :class="{ cheked: todo.cheked }" v-model="todo.description">
+                </input>
                 <button
                   class="destroy"
                   :class="{ completed__task: todo.cheked }"
