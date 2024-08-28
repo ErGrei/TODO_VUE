@@ -209,12 +209,20 @@ export default {
   padding: 0.5rem 0.8rem;
   margin-right: 0.5rem;
   margin-top: 0.5rem;
+  background-color: #cccccc00;
 }
 .label-description {
   width: 100%;
   padding: 0.5rem 0.8rem;
   margin-right: 0.5rem;
   margin-top: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: #cccccc00;
+}
+.label-description:hover,
+.label-title:hover {
+  border: #035711, 1px, solid;
+  border-radius: 0.5rem;
 }
 
 .destroy {
