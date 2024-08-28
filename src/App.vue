@@ -2,14 +2,14 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 export default {
-  setup() {
-    return { v$: useVuelidate() };
-  },
+
   data() {
     return {
+      v$: useVuelidate(),
       newTodos: {
         title: "",
         description: "",
+        errorZopa: false
       },
       todos: [
         {
@@ -34,7 +34,11 @@ export default {
         description: "",
       };
     },
-    addTodo() {
+    async addTodo() {
+      const isFormCorrect = await this.v$.$validate(); // returns false or true
+      if (!isFormCorrect) {
+        this.newTodos.errorZopa = true
+        return};
       this.todos.push({
         id: this.todos.length + 1,
         title: this.newTodos.title,
@@ -50,10 +54,9 @@ export default {
   },
 
   validations() {
-    console.log(this.v$);
     return {
       newTodos: {
-        title: { required, },
+        title: { required },
         description: { required },
       },
     };
@@ -76,12 +79,18 @@ export default {
               v-model.trim="newTodos.title"
               placeholder="Title"
             />
+            <span class="error" v-if="newTodos.errorZopa">
+              This field is required</span
+            >
             <input
               v-model.trim="newTodos.description"
               placeholder="What needs to be done?"
               class="new-todo"
               type="text"
             />
+            <span class="error" v-if="newTodos.errorZopa">
+              This field is required</span
+            >
             <button class="button" type="submit">Add</button>
           </form>
         </section>
@@ -97,12 +106,20 @@ export default {
               <div class="view">
                 <div class="cotainer__tittle__descrip">
                   <input class="toggle" type="checkbox" v-model="todo.cheked" />
-                  <input type="text" class="label-title" :class="{ cheked: todo.cheked }" v-model="todo.title">
-                    
-                </input>
+                  <input
+                    type="text"
+                    class="label-title"
+                    :class="{ cheked: todo.cheked }"
+                    v-model="todo.title"
+                  />
                 </div>
-                <input type="text" class="label-description" :class="{ cheked: todo.cheked }" v-model="todo.description">
-                </input>
+                <input
+                  type="text"
+                  class="label-description"
+                  :class="{ cheked: todo.cheked }"
+                  v-model="todo.description"
+                />
+
                 <button
                   class="destroy"
                   :class="{ completed__task: todo.cheked }"
@@ -227,5 +244,10 @@ export default {
   border-radius: 0.5rem;
   background-color: #96f8a750;
   transition: all 0.8s ease;
+}
+
+.error {
+  display: block;
+  color: red;
 }
 </style>
