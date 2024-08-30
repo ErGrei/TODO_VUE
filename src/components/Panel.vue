@@ -1,81 +1,43 @@
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+
 export default {
-    props: ["newTodos", "todos"],
-  data() {
-    return {
-      v$: useVuelidate(),
-      newTodos: {
-        title: "",
-        description: "",
-        errorZopa: false,
-      },
-      todos: [],
-    };
-  },
-  methods: {
-    async addTodo() {
-      const isFormCorrect = await this.v$.$validate(); // returns false or true
-      if (!isFormCorrect) {
-        this.newTodos.errorZopa = true;
-        return;
-      }
-      this.todos.push({
-        id: this.todos.length + 1,
-        title: this.newTodos.title,
-        description: this.newTodos.description,
-        cheked: false,
-      });
-      this.resetForm();
+  props: {
+    newTodos: {
+      type: Object,
+      required: true,
     },
-
-    resetForm() {
-      this.newTodos = {
-        title: "",
-        description: "",
-      };
-    },
-  },
-
-  validations() {
-    return {
-      newTodos: {
-        title: { required },
-        description: { required },
-      },
-    };
+ 
   },
 };
 </script>
 
 <template>
   <div class="app">
-      <h1 class="title">Todo App</h1>
-      <section class="todoapp">
-        <form @submit.prevent=$emit('newTodos')>
-          <input
-            type="text"
-            class="new-todo"
-            v-model.trim="newTodos.title"
-            placeholder="Title"
-          />
-          <span class="error" v-if="newTodos.errorZopa">
-            This field is required</span
-          >
-          <input
-            v-model.trim="newTodos.description"
-            placeholder="What needs to be done?"
-            class="new-todo"
-            type="text"
-          />
-          <span class="error" v-if="newTodos.errorZopa">
-            This field is required</span
-          >
-          <button class="button__add" type="submit">Add</button>
-        </form>
-      </section>
-    </div>
+    <h1 class="title">Todo App</h1>
+    <section class="todoapp">
+      <form @submit.prevent="addTodo">
+        <input
+          type="text"
+          class="new-todo"
+          v-model.trim="newTodos.title"
+          placeholder="Title"
+        />
+        <span class="error" v-if="newTodos.errorZopa">
+          This field is required</span
+        >
+        <input
+          v-model.trim="newTodos.description"
+          placeholder="What needs to be done?"
+          class="new-todo"
+          type="text"
+        />
+        <span class="error" v-if="newTodos.errorZopa">
+          This field is required</span
+        >
+        <button class="button__add" type="submit">Add</button>
+      </form>
+    </section>
+  </div>
 </template>
 
 <style scoped>
