@@ -6,6 +6,14 @@ export default {
       required: true,
     },
   },
+
+ 
+
+  methods: {
+    deleteTodo(id) {
+      this.$emit("deleteTodo", id);
+    },
+  },
 };
 </script>
 
@@ -47,7 +55,7 @@ export default {
   </section>
 </template>
 
-<style>
+<style scoped>
 .todo {
   width: 100%;
   border: 1px solid #ccc;

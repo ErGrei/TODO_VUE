@@ -1,12 +1,64 @@
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
+  
+  name: "Panel",
   props: {
-    newTodos: {
-      type: Object,
+    todos: {
+      type: Array,
       required: true,
     },
- 
+  },
+  data() {
+    return {
+      v$: useVuelidate(),
+      newTodos: {
+        title: "",
+        description: "",
+        errorZopa: false,
+      },
+    };
+  },
+
+  methods: {
+    async addTodo() {
+      this.newTodos.id = Symbol();
+      this.newTodos.cheked = false;
+
+      const isFormCorrect = await this.v$.$validate();
+
+      if (!isFormCorrect) {
+        this.newTodos.errorZopa = true;
+        return;
+      }
+      this.$emit("addTodo", this.newTodos);
+
+      // this.todos.push({
+      //   id: this.todos.length + 1,
+      //   title: this.newTodos.title,
+      //   description: this.newTodos.description,
+      //   cheked: false,
+      // });
+      this.resetForm();
+    },
+
+    resetForm() { 
+      this.newTodos = { 
+        title: "",
+        description: "",
+        errorZopa: false
+      };
+    },
+  },
+  validations() {
+    return {
+      newTodos: {
+        title: { required },
+        description: { required },
+      },
+    };
   },
 };
 </script>

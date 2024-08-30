@@ -1,21 +1,15 @@
 <script>
-import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
 import Panel from "./components/Panel.vue";
 import TodoTasks from "./components/TodoTasks.vue";
+
 export default {
   components: {
     Panel,
     TodoTasks,
   },
+
   data() {
     return {
-      v$: useVuelidate(),
-      newTodos: {
-        title: "",
-        description: "",
-        errorZopa: false,
-      },
       todos: [
         {
           id: 1,
@@ -38,43 +32,15 @@ export default {
       ],
     };
   },
+
   methods: {
-  
-
-    async addTodo() {
-      const isFormCorrect = await this.v$.$validate(); // returns false or true
-      if (!isFormCorrect) {
-        this.newTodos.errorZopa = true;
-        return;
-      }
-      this.todos.push({
-        id: this.todos.length + 1,
-        title: this.newTodos.title,
-        description: this.newTodos.description,
-        cheked: false,
-      });
-      this.resetForm();
-    },
-
-    resetForm() {
-      this.newTodos = {
-        title: "",
-        description: "",
-      };
+    addTodo(todo) {
+      this.todos.push(todo);
     },
 
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
-  },
-
-  validations() {
-    return {
-      newTodos: {
-        title: { required },
-        description: { required },
-      },
-    };
   },
 };
 </script>
@@ -82,8 +48,8 @@ export default {
 <template>
   <div class="app">
     <div class="container">
-      <panel :newTodos="newTodos" />
-      <todo-tasks :todos="todos" />
+      <panel :todos="todos" @addTodo="addTodo" />
+      <todo-tasks :todos="todos" @deleteTodo="deleteTodo" />
     </div>
   </div>
 </template>
