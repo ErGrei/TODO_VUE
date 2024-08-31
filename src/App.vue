@@ -20,26 +20,7 @@ export default {
   data() {
     return {
       STORAGE_KEY: "todos",
-      todos: [
-        {
-          id: 1,
-          title: "Todo 1",
-          description: "Description 1",
-          cheked: false,
-        },
-        {
-          id: 2,
-          title: "Todo 2",
-          description: "Description 2",
-          cheked: false,
-        },
-        {
-          id: 3,
-          title: "Todo 3",
-          description: "Description 3",
-          cheked: false,
-        },
-      ],
+      todos: [],
     };
   },
 
