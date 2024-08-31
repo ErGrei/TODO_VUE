@@ -24,7 +24,7 @@ export default {
 
   methods: {
     async addTodo() {
-      this.newTodos.id = Symbol();
+      this.newTodos.id = Date.now();
       this.newTodos.cheked = false;
       this.newTodos.editable = false;
       this.btnChange = 'Change';

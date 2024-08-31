@@ -7,6 +7,13 @@ export default {
     Panel,
     TodoTasks,
   },
+  
+  data() {
+    return {
+      STORAGE_KEY: "todos",
+      todos: [],
+    };
+  },
 
   mounted() {
     const todosFromStorage = localStorage.getItem(this.STORAGE_KEY);
@@ -17,12 +24,7 @@ export default {
     }
   },
 
-  data() {
-    return {
-      STORAGE_KEY: "todos",
-      todos: [],
-    };
-  },
+
 
   methods: {
     addTodo(todo) {
@@ -40,14 +42,14 @@ export default {
         if (todo.id === id) {
           todo.editable = !todo.editable;
           console.log(todo.editable);
-          togleBtn();
+          this.togleBtn(todo);
         }
         return todo;
       });
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.todos));
     },
 
-    togleBtn() {
+    togleBtn(todo) {
       if (todo.editable) {
         this.btnChange = "Save";
         return;
@@ -66,6 +68,7 @@ export default {
         :todos="todos"
         @deleteTodo="deleteTodo"
         @changeTask="changeTask"
+        @togleBtn="togleBtn"
       />
     </div>
   </div>

@@ -15,6 +15,10 @@ export default {
     changeTask(id) {
       this.$emit("changeTask", id);
     },
+
+    togleBtn() {
+      this.$emit("togleBtn", todo);
+    }
   },
 };
 </script>
