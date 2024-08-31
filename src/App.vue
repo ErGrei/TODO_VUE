@@ -8,8 +8,18 @@ export default {
     TodoTasks,
   },
 
+  mounted() {
+    const todosFromStorage = localStorage.getItem(this.STORAGE_KEY);
+    try {
+      this.todos = todosFromStorage ? JSON.parse(todosFromStorage) : [];
+    } catch (error) {
+      console.error("Error while parsing todos from localStorage:", error);
+    }
+  },
+
   data() {
     return {
+      STORAGE_KEY: "todos",
       todos: [
         {
           id: 1,
@@ -36,10 +46,12 @@ export default {
   methods: {
     addTodo(todo) {
       this.todos.push(todo);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.todos));
     },
 
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.todos));
     },
   },
 };

@@ -1,6 +1,7 @@
 <script>
 export default {
   props: {
+  
     todos: {
       type: Array,
       required: true,
@@ -10,6 +11,7 @@ export default {
  
 
   methods: {
+  
     deleteTodo(id) {
       this.$emit("deleteTodo", id);
     },
