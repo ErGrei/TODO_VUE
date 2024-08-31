@@ -1,19 +1,19 @@
 <script>
 export default {
   props: {
-  
     todos: {
       type: Array,
       required: true,
     },
   },
 
- 
-
   methods: {
-  
     deleteTodo(id) {
       this.$emit("deleteTodo", id);
+    },
+
+    changeTask(id) {
+      this.$emit("changeTask", id);
     },
   },
 };
@@ -33,6 +33,7 @@ export default {
             <input class="toggle" type="checkbox" v-model="todo.cheked" />
             <input
               type="text"
+              :readonly="!todo.editable"
               class="label-title"
               :class="{ cheked: todo.cheked }"
               v-model="todo.title"
@@ -40,6 +41,7 @@ export default {
           </div>
           <input
             type="text"
+            :readonly="!todo.editable"
             class="label-description"
             :class="{ cheked: todo.cheked }"
             v-model="todo.description"
@@ -50,6 +52,16 @@ export default {
             @click="deleteTodo(todo.id)"
           >
             Del
+          </button>
+          <button
+            class="change"
+            :class="{
+              completed__task: todo.cheked,
+              change__task: todo.editable,
+            }"
+            @click="changeTask(todo.id)"
+          >
+            {{ todo.editable ? "Save" : "Change" }}
           </button>
         </div>
       </li>
@@ -126,6 +138,30 @@ export default {
   border: 1px, solid, #035711;
   border-radius: 0.5rem;
   background-color: #96f8a750;
+  transition: all 0.8s ease;
+}
+
+.change {
+  width: 5rem;
+  height: 2rem;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.change:hover {
+  background-color: #035711;
+}
+
+.change__task {
+  border: 1px, solid, #035711;
+  border-radius: 0.5rem;
+  background-color: #057017b0;
   transition: all 0.8s ease;
 }
 </style>

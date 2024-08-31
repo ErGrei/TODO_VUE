@@ -34,6 +34,26 @@ export default {
       this.todos = this.todos.filter((todo) => todo.id !== id);
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.todos));
     },
+
+    changeTask(id) {
+      this.todos = this.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.editable = !todo.editable;
+          console.log(todo.editable);
+          togleBtn();
+        }
+        return todo;
+      });
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.todos));
+    },
+
+    togleBtn() {
+      if (todo.editable) {
+        this.btnChange = "Save";
+        return;
+      }
+      this.btnChange = "Change";
+    },
   },
 };
 </script>
@@ -42,7 +62,11 @@ export default {
   <div class="app">
     <div class="container">
       <panel :todos="todos" @addTodo="addTodo" />
-      <todo-tasks :todos="todos" @deleteTodo="deleteTodo" />
+      <todo-tasks
+        :todos="todos"
+        @deleteTodo="deleteTodo"
+        @changeTask="changeTask"
+      />
     </div>
   </div>
 </template>

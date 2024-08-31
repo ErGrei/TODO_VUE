@@ -26,6 +26,8 @@ export default {
     async addTodo() {
       this.newTodos.id = Symbol();
       this.newTodos.cheked = false;
+      this.newTodos.editable = false;
+      this.btnChange = 'Change';
 
       const isFormCorrect = await this.v$.$validate();
 
